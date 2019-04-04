@@ -9,8 +9,8 @@ import java.util.Objects;
 
 
 /**
- * describe：
- * author ：王文彬 on 2018/5/4 16：13
+ * describe：文件下载工具类
+ * author ：mp5a5 on 2019/4/4 16：13
  * email：wwb199055@126.com
  */
 public class DownloadFileUtils {

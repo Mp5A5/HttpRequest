@@ -25,7 +25,7 @@ import java.util.concurrent.Callable;
 
 /**
  * @author ：mp5a5 on 2019/1/2 14：31
- * @describe
+ * @describe 文件上传
  * @email：wwb199055@126.com
  */
 public class UploadManager {

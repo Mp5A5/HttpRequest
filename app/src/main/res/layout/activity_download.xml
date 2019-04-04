@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    android:background="@android:color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:src="@mipmap/icon_pdf"
+            android:layout_width="85dp"
+            android:layout_height="92dp"
+            />
+
+
+        <LinearLayout
+            android:id="@+id/ll_download_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="93dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_pdf_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="#7F7F7F"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_marginTop="19dp"
+
+                >
+
+                <ProgressBar
+                    android:id="@+id/tv_download_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginLeft="48dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/shape_download_pdf_bg"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_stop_download"
+                    android:src="@mipmap/icon_stop_pdf"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginRight="48dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <Button
+                android:id="@+id/bt_download"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="开始下载"
+                android:layout_marginTop="93dp"
+                android:textAllCaps="false"
+                android:layout_marginLeft="43dp"
+                android:layout_marginRight="43dp"
+                android:textColor="@android:color/white"
+                />
+
+
+            <Button
+                android:id="@+id/bt_re_download"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="继续下载"
+                android:layout_marginTop="93dp"
+                android:textAllCaps="false"
+                android:layout_marginLeft="43dp"
+                android:layout_marginRight="43dp"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

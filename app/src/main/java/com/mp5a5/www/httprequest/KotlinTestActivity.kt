@@ -10,7 +10,7 @@ import com.mp5a5.www.httprequest.net.api.UploadService
 import com.mp5a5.www.httprequest.net.entity.NBAEntity
 import com.mp5a5.www.httprequest.net.entity.UploadEntity
 import com.mp5a5.www.library.use.BaseObserver
-import com.mp5a5.www.library.utils.UploadManager
+import com.mp5a5.www.library.use.UploadManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers

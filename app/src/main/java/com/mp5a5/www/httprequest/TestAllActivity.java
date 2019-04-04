@@ -15,7 +15,7 @@ import com.mp5a5.www.httprequest.net.api.UploadService;
 import com.mp5a5.www.httprequest.net.entity.NBAEntity;
 import com.mp5a5.www.library.net.revert.BaseResponseEntity;
 import com.mp5a5.www.library.use.BaseObserver;
-import com.mp5a5.www.library.utils.UploadManager;
+import com.mp5a5.www.library.use.UploadManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -47,7 +47,7 @@ public class TestAllActivity extends RxAppCompatActivity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(this.bindToLifecycle())
-                    .subscribe(new BaseObserver<NBAEntity>(this,true) {
+                    .subscribe(new BaseObserver<NBAEntity>(this, true) {
 
                         @Override
                         public void onSuccess(NBAEntity response) {
@@ -115,6 +115,11 @@ public class TestAllActivity extends RxAppCompatActivity {
 
 
                     });
+
+        });
+
+        findViewById(R.id.btnDownload).setOnClickListener(v -> {
+            startActivity(new Intent(this, DownloadActivity.class));
 
         });
     }

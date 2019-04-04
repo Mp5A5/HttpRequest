@@ -43,4 +43,13 @@
         android:text="上传"
         />
 
+    <Button
+        android:id="@+id/btnDownload"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        app:layout_constraintTop_toBottomOf="@id/btnChoose"
+        android:text="下载"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

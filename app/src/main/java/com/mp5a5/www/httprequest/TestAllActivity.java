@@ -14,11 +14,14 @@ import com.mp5a5.www.httprequest.net.api.NbaService;
 import com.mp5a5.www.httprequest.net.api.UploadService;
 import com.mp5a5.www.httprequest.net.entity.NBAEntity;
 import com.mp5a5.www.library.net.revert.BaseResponseEntity;
+import com.mp5a5.www.library.use.BaseDisposableSubscriber;
 import com.mp5a5.www.library.use.BaseObserver;
 import com.mp5a5.www.library.use.UploadManager;
+import com.mp5a5.www.library.utils.RxTransformerUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 import java.io.File;
@@ -34,12 +37,15 @@ import java.util.Objects;
 public class TestAllActivity extends RxAppCompatActivity {
 
     private List<File> list = new ArrayList<File>();
+    private CompositeDisposable mCompositeDisposable = null;
 
     @SuppressLint("IntentReset")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mCompositeDisposable= new CompositeDisposable();
 
         findViewById(R.id.btnNBA).setOnClickListener(v -> {
             NbaService.getInstance()
@@ -61,6 +67,32 @@ public class TestAllActivity extends RxAppCompatActivity {
 
         });
 
+
+        findViewById(R.id.btnOwner).setOnClickListener(v -> {
+            /*BaseDisposableObserver<NBAEntity> disposable = NbaService.getInstance()
+                    .getNBAInfo("6949e822e6844ae6453fca0cf83379d3")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new BaseDisposableObserver<NBAEntity>(this, true) {
+                        @Override
+                        public void onSuccess(NBAEntity response) {
+                            Toast.makeText(TestAllActivity.this, response.result.title, Toast.LENGTH_SHORT).show();
+                        }
+                    });*/
+
+            BaseDisposableSubscriber<NBAEntity> disposable = NbaService.getInstance()
+                    .getNBAInfo1("6949e822e6844ae6453fca0cf83379d3")
+                    .compose(RxTransformerUtils.flowableTransformer())
+                    .subscribeWith(new BaseDisposableSubscriber<NBAEntity>(this, true) {
+                        @Override
+                        public void onSuccess(NBAEntity response) {
+                            Toast.makeText(TestAllActivity.this, response.result.title, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            mCompositeDisposable.add(disposable);
+
+        });
 
         findViewById(R.id.tvTest).setOnClickListener(v -> {
             NBAServiceT.INSTANCE
@@ -149,6 +181,14 @@ public class TestAllActivity extends RxAppCompatActivity {
 
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mCompositeDisposable != null && mCompositeDisposable.isDisposed()) {
+            mCompositeDisposable.clear();
+        }
     }
 }
 

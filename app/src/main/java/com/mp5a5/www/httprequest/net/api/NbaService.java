@@ -3,6 +3,7 @@ package com.mp5a5.www.httprequest.net.api;
 import android.util.ArrayMap;
 import com.mp5a5.www.httprequest.net.entity.NBAEntity;
 import com.mp5a5.www.library.use.RetrofitFactory;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 /**
@@ -30,6 +31,12 @@ public class NbaService {
         ArrayMap<String, Object> map = new ArrayMap<>();
         map.put("key", key);
         return nbaApiT.getNBAInfo(map);
+    }
+
+    public Flowable<NBAEntity> getNBAInfo1(String key) {
+        ArrayMap<String, Object> map = new ArrayMap<>();
+        map.put("key", key);
+        return nbaApiT.getNBAInfo1(map);
     }
 
 }

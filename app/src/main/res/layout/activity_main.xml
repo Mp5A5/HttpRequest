@@ -18,13 +18,22 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
+        android:id="@+id/btnOwner"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:text="自己管理网络请求"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnNBA"/>
+
+    <Button
         android:id="@+id/tvTest"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:text="测试二"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnNBA"
+        app:layout_constraintTop_toBottomOf="@id/btnOwner"
         />
 
     <Button

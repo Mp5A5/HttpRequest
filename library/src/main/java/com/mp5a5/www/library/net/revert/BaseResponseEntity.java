@@ -22,8 +22,8 @@ public class BaseResponseEntity<T> implements Serializable {
         return ApiConfig.getSucceedCode() == code;
     }
 
-    public int getTokenInvalid() {
-        return ApiConfig.getInvalidateToken();
+    public boolean tokenInvalid() {
+        return ApiConfig.getInvalidateToken() == code;
     }
 
     public T data;

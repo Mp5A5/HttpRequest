@@ -98,7 +98,7 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (response.getTokenInvalid() == response.code) {
+        } else if (response.tokenInvalid()) {
             //token失效捕捉，发送广播，在项目中接收该动态广播然后做退出登录等一些列操作
             VariableUtils.receive_token_count++;
             if (1 == VariableUtils.receive_token_count) {

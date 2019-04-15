@@ -36,7 +36,7 @@ public class TestApp extends Application {
 
         ApiConfig build = new ApiConfig.Builder()
                 .setBaseUrl(baseUrl)//BaseUrl，这个地方加入后项目中默认使用该url
-                .setInvalidateToken(0)//Token失效码
+                .setInvalidateToken(10)//Token失效码
                 .setSucceedCode(0)//成功返回码  NBA的测试返回成功code为0  上传图片返回code为200 由于是不同接口 请大家注意
                 .setFilter("com.mp5a5.quit.broadcastFilter")//失效广播Filter设置
                 //.setDefaultTimeout(2000)//响应时间，可以不设置，默认为2000毫秒

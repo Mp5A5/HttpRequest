@@ -174,7 +174,8 @@ public class NBAServiceTT {
 
 ###### 4.设置接收参数
 ```Java
-实体类必须继承BaseResponseEntity，如果公司返回的参数不叫code，则使用@SerializedName("value")起别名的方式，写个别名
+实体类必须继承BaseResponseEntity，如果公司返回的参数不叫code，则使用@SerializedName("value")起别名的方式，写个别名，然后重写success()和  
+tokenInvalid()方法
 public class NBAEntity extends BaseResponseEntity {
 
 
@@ -182,7 +183,17 @@ public class NBAEntity extends BaseResponseEntity {
     public int code;
     public String reason;
     public ResultBean result;
+    
+    @Override
+    public boolean success() {
+        return ApiConfig.getSucceedCode() == code;
+    }
 
+    @Override
+    public boolean tokenInvalid() {
+        return ApiConfig.getInvalidateToken() == code;
+    }
+    
 
     public static class ResultBean {
 

@@ -2,6 +2,7 @@ package com.mp5a5.www.httprequest.net.entity;
 
 import com.google.gson.annotations.SerializedName;
 import com.mp5a5.www.library.net.revert.BaseResponseEntity;
+import com.mp5a5.www.library.utils.ApiConfig;
 
 import java.util.List;
 
@@ -15,9 +16,29 @@ public class NBAEntity extends BaseResponseEntity {
 
     @SerializedName("error_code")
     public int code;
-    public String reason;
+
+    @SerializedName("reason")
+    public String msg;
     public ResultBean result;
 
+    @Override
+    public boolean success() {
+        return ApiConfig.getSucceedCode() == code;
+    }
+
+    @Override
+    public boolean tokenInvalid() {
+        return ApiConfig.getInvalidateToken() == code;
+    }
+
+    @Override
+    public String toString() {
+        return "NBAEntity{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", result=" + result +
+                '}';
+    }
 
     public static class ResultBean {
         /**

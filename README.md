@@ -23,7 +23,7 @@ compileOptions {
 ```Java
 dependencies {
 
-       implementation 'com.github.Mp5A5:HttpRequest:1.1.0'
+       implementation 'com.github.Mp5A5:HttpRequest:1.1.1'
 }
 ```
 
@@ -174,7 +174,7 @@ public class NBAServiceTT {
 
 ###### 4.设置接收参数
 ```Java
-实体类必须继承BaseResponseEntity，如果公司返回的参数不叫code，则使用@SerializedName("value")起别名的方式，写个别名，然后重写success()和  
+实体类必须继承BaseResponseEntity，如果公司返回的参数不叫code，则使用@SerializedName("value")起别名的方式，写个别名，然后必须重写success()和  
 tokenInvalid()方法
 public class NBAEntity extends BaseResponseEntity {
 

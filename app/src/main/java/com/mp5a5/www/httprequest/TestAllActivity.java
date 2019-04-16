@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.mp5a5.www.httprequest.net.api.NBAServiceT;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 /**
  * @author ：mp5a5 on 2019/1/7 14：03
@@ -53,10 +55,22 @@ public class TestAllActivity extends RxAppCompatActivity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(this.bindToLifecycle())
-                    .subscribe(new BaseObserver<NBAEntity>(this, true) {
+                    .subscribe(new BaseObserver<NBAEntity>(this,true) {
+                        @Override
+                        protected void onRequestStart() {
+                            super.onRequestStart();
+                            Log.e("TestAllActivity", "请求开始");
+                        }
+
+                        @Override
+                        protected void onRequestEnd() {
+                            super.onRequestEnd();
+                            Log.e("TestAllActivity", "请求结束");
+                        }
 
                         @Override
                         public void onSuccess(NBAEntity response) {
+                            Log.e("TestAllActivity", "请求成功");
                             Toast.makeText(TestAllActivity.this, response.result.title, Toast.LENGTH_SHORT).show();
                             //Toast.makeText(TestAllActivity.this, String.valueOf(response.code), Toast.LENGTH_SHORT).show();
                             //Toast.makeText(TestAllActivity.this, response.reason, Toast.LENGTH_SHORT).show();

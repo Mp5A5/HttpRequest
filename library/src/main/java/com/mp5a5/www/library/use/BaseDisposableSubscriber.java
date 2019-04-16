@@ -91,7 +91,6 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
 
     @Override
     public void onNext(T response) {
-        onRequestEnd();
         if (response.success()) {
             try {
                 onSuccess(response);
@@ -228,7 +227,7 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
     /**
      * 网络请求开始
      */
-    private void onRequestStart() {
+    protected void onRequestStart() {
         if (mShowLoading) {
             showProgressDialog();
         }
@@ -237,7 +236,7 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
     /**
      * 网络请求结束
      */
-    private void onRequestEnd() {
+    protected void onRequestEnd() {
         closeProgressDialog();
     }
 

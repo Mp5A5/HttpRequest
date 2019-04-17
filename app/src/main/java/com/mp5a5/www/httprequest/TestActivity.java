@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
-import com.mp5a5.www.httprequest.net.api.NBAServiceTT;
-import com.mp5a5.www.httprequest.net.entity.NBAEntity;
+import com.mp5a5.www.httprequest.net.api.java_nba.NBANoSingletonService;
+import com.mp5a5.www.httprequest.net.entity.NBAJEntity;
 import com.mp5a5.www.library.use.BaseObserver;
 import com.mp5a5.www.library.utils.ApiConfig;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -32,15 +32,15 @@ public class TestActivity extends RxAppCompatActivity {
         initReceiver();
 
 
-        new NBAServiceTT()
+        new NBANoSingletonService()
                 .getNBAInfo("6949e822e6844ae6453fca0cf83379d3")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(this.bindToLifecycle())
-                .subscribe(new BaseObserver<NBAEntity>(this, true) {
+                .subscribe(new BaseObserver<NBAJEntity>(this, true) {
                     @Override
-                    public void onSuccess(NBAEntity response) {
-                        Toast.makeText(TestActivity.this, response.result.title, Toast.LENGTH_SHORT).show();
+                    public void onSuccess(NBAJEntity response) {
+                        Toast.makeText(TestActivity.this, response.getMsg(), Toast.LENGTH_SHORT).show();
                     }
                 });
 

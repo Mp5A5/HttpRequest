@@ -178,7 +178,7 @@ public abstract class BaseObserver<T extends BaseResponseEntity> implements Obse
      * @param response 返回值
      */
     public void onFailing(T response) {
-        String message = response.msg;
+        String message = response.getMsg();
         if (TextUtils.isEmpty(message)) {
             Toast.makeText(AppContextUtils.getContext(), RESPONSE_RETURN_ERROR, Toast.LENGTH_SHORT).show();
         } else {

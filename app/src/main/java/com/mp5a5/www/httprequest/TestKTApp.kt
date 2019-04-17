@@ -10,7 +10,7 @@ import com.mp5a5.www.library.utils.SslSocketConfigure
  * @describe
  * @email：wwb199055@126.com
  */
-class App : Application() {
+class TestKTApp : Application() {
     override fun onCreate() {
         super.onCreate()
 

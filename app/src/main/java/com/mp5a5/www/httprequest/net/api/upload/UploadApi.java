@@ -1,4 +1,4 @@
-package com.mp5a5.www.httprequest.net.api;
+package com.mp5a5.www.httprequest.net.api.upload;
 
 import com.mp5a5.www.httprequest.net.entity.UploadEntity;
 import io.reactivex.Observable;

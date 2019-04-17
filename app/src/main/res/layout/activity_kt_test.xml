@@ -21,14 +21,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <Button
-            android:id="@+id/btnOwner"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            android:text="自己管理网络请求"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnNBA"/>
 
         <Button
             android:id="@+id/tvTest"
@@ -37,7 +29,7 @@
             android:text="测试二"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnOwner"
+            app:layout_constraintTop_toBottomOf="@id/btnNBA"
             />
 
         <Button
@@ -56,21 +48,6 @@
             android:text="上传"
             />
 
-        <Button
-            android:id="@+id/btnDownload"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            app:layout_constraintTop_toBottomOf="@id/btnUpload"
-            android:text="下载"
-            />
-        <Button
-            android:id="@+id/btnGoToKt"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            app:layout_constraintTop_toBottomOf="@id/btnUpload"
-            android:textAllCaps="false"
-            android:text="Go to Kotlin"
-            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

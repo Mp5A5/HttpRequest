@@ -11,7 +11,7 @@ import com.mp5a5.www.library.utils.SslSocketConfigure;
  * @email：wwb199055@126.com
  */
 
-public class TestApp extends Application {
+public class TestJApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

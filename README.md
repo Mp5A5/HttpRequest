@@ -23,7 +23,7 @@ compileOptions {
 ```Java
 dependencies {
 
-       implementation 'com.github.Mp5A5:HttpRequest:1.1.2'
+       implementation 'com.github.Mp5A5:HttpRequest:1.1.3'
 }
 ```
 
@@ -174,16 +174,28 @@ public class NBAServiceTT {
 
 ###### 4.设置接收参数
 ```Java
-实体类必须继承BaseResponseEntity，如果公司返回的参数不叫code，则使用@SerializedName("value")起别名的方式，写个别名，然后必须重写success()和  
-tokenInvalid()方法
+实体类必须继承BaseResponseEntity，如果公司返回的参数不叫code，则使用@SerializedName("value")起别名的方式，写个别名，  
+然后必须重写getMsg()、setMsg(String msg)success()和tokenInvalid()方法。
 public class NBAEntity extends BaseResponseEntity {
 
 
     @SerializedName("error_code")
-    public int code;
-    public String reason;
-    public ResultBean result;
-    
+    private int code;
+
+    @SerializedName("reason")
+    private String msg;
+
+    @Nullable
+    @Override
+    public String getMsg() {
+        return msg;
+    }
+
+    @Override
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     @Override
     public boolean success() {
         return ApiConfig.getSucceedCode() == code;
@@ -194,6 +206,7 @@ public class NBAEntity extends BaseResponseEntity {
         return ApiConfig.getInvalidateToken() == code;
     }
     
+    public ResultBean result;
 
     public static class ResultBean {
 
@@ -205,6 +218,11 @@ public class NBAEntity extends BaseResponseEntity {
 
         、、、
 }
+
+//如果是kotlin也则使用@SerializedName("value")然后选择重写code和msg
+data class NBAKTEntity(
+    @SerializedName("error_code") override var code: Int, @SerializedName("reason") override var msg: String, var result: ResultEntity?
+) : BaseResponseEntity<NBAKTEntity>()
 
 ```
 ###### 5.发送请求,接收参数

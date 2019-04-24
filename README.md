@@ -23,7 +23,7 @@ compileOptions {
 ```Java
 dependencies {
 
-       implementation 'com.github.Mp5A5:HttpRequest:1.1.3'
+       implementation 'com.github.Mp5A5:HttpRequest:1.1.4'
 }
 ```
 

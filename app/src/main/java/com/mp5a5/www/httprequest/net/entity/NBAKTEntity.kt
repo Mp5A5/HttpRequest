@@ -10,7 +10,7 @@ import com.mp5a5.www.library.net.revert.BaseResponseEntity
  */
 data class NBAKTEntity(
     @SerializedName("error_code") override var code: Int, @SerializedName("reason") override var msg: String, var result: ResultEntity?
-) : BaseResponseEntity<NBAKTEntity>() {
+) : BaseResponseEntity() {
 
     data class ResultEntity(
         var _id: String?,

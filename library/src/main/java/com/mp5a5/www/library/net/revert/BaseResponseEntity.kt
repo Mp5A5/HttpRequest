@@ -8,7 +8,7 @@ import java.io.Serializable
  * @describe
  * @email：wwb199055@126.com
  */
-open class BaseResponseEntity<T> : Serializable {
+open class BaseResponseEntity : Serializable {
 
     open var code: Int = -1
 
@@ -25,7 +25,5 @@ open class BaseResponseEntity<T> : Serializable {
     open fun tokenInvalid(): Boolean {
         return ApiConfig.getInvalidateToken() == code
     }
-
-    var data: T? = null
 
 }

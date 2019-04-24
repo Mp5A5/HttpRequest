@@ -11,12 +11,20 @@ import java.util.List;
  * email：wwb199055@126.com
  */
 
-public class UploadEntity extends BaseResponseEntity<UploadEntity> {
+public class UploadEntity extends BaseResponseEntity {
 
-    public List<FileBean> files;
+    public DataBean data;
 
-    public class FileBean {
-        public String fileName;
-        public String url;
+    public class DataBean {
+
+        public List<FileBean> files;
+
+        public class FileBean {
+            public String fileName;
+            public String url;
+        }
     }
+
+
+
 }

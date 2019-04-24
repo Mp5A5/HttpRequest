@@ -37,7 +37,7 @@ class KotlinTestActivity : RxAppCompatActivity() {
                 .compose(this.bindToLifecycle())
                 .subscribe(object : BaseObserver<NBAKTEntity>(this, true) {
                     override fun onSuccess(response: NBAKTEntity) {
-                        toast(response.msg)
+                        toast(response.result?.title!!)
                     }
                 })
         }

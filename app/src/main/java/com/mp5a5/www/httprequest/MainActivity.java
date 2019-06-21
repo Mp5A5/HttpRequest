@@ -87,6 +87,12 @@ public class MainActivity extends RxAppCompatActivity {
                                         Toast.makeText(MainActivity.this, response.getMsg(), Toast.LENGTH_SHORT).show();
                                     }
 
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        //super.onError(e);
+                                        onRequestEnd();
+                                        Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                                    }
                                 });
 
 

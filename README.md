@@ -249,6 +249,35 @@ findViewById(R.id.btnNBA).setOnClickListener(v -> {
 
 ```
 
+如果想使用系统提供的Dialog,但是重写了onError方法但是没有使用super.onError(e);  
+那么必须调用onRequestEnd()方法，不然Dialog是不会消失的，至于原因自己参照Java多态机制；
+```
+UploadManager.getInstance()
+                    .uploadMultiPicList(list)
+                    .subscribe(parts -> {
+                        UploadService.getInstance()
+                                .uploadPic(parts)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .compose(this.bindToLifecycle())
+                                .subscribe(new BaseObserver<BaseResponseEntity>(this, true) {
+                                    @Override
+                                    public void onSuccess(BaseResponseEntity response) {
+                                        Toast.makeText(MainActivity.this, response.getMsg(), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        //super.onError(e);
+                                        onRequestEnd();
+                                        Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+                    });
+```
+
 #### 3、效果展示
 
 ![show.gif](img/show.gif)

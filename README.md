@@ -1,10 +1,10 @@
 # 基于Retrofit2+RxJava+OkHttp3+RxLifecycle3的网络请求框架
 
-#### 1、添加依赖和配置
+### 添加依赖和配置
 
-* 工程添加依赖仓库，Add the JitPack repository to your build file
+工程添加依赖仓库，Add the JitPack repository to your build file
 
-```Java
+```
 allprojects {
    repositories {
    		...
@@ -13,39 +13,59 @@ allprojects {
 }
 ```
 
-```Java
+```
 compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 ```
 
-```Java
+```
 dependencies {
-
        implementation 'com.github.Mp5A5:HttpRequest:1.1.4'
 }
 ```
 
-如果项目使用RxLifecycle管理网络请求，则：  
-1.如果项目是用的support包则使用RxLifecycle2及对应的版本
-```Java
+```
+dependencies {
+    //RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:latest-version'
+    implementation 'io.reactivex.rxjava2:rxjava:latest-version'
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:latest-version'
+    implementation 'com.squareup.okhttp3:logging-interceptor:latest-version'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:latest-version'
+    implementation 'com.squareup.retrofit2:converter-gson:latest-version'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:latest-version'
+}
+```
+
+如果项目使用RxLifecycle管理网络请求，则： 
+ 
+* 如果项目是用的support包则使用RxLifecycle2及对应的版本
+
+```
     implementation 'com.trello.rxlifecycle2:rxlifecycle:latest-version'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-android:latest-version'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:version'
 ```
-2.如果项目是用的androidx包则使用RxLifecycle3及对应的版本
-```Java
+
+* 如果项目是用的androidx包则使用RxLifecycle3及对应的版本
+
+```
     implementation 'com.trello.rxlifecycle3:rxlifecycle:latest-version'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android:latest-version'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-components:latest-version'
 ```
-如果项目不使用RxLifecycle管理网络请求，而是通过手动管理，则不需要添加RxLifecycle对应的包
-#### 2、简单使用步骤
 
-###### 1.在Application类中进行初始化操作
+* 如果项目不使用RxLifecycle管理网络请求，而是通过手动管理，则不需要添加RxLifecycle对应的包
 
-```Java
+### 简单使用步骤
+
+#### 在Application类中进行初始化操作
+
+```
 @Override
     public void onCreate() {
         super.onCreate();
@@ -113,9 +133,10 @@ dependencies {
     }
 
 ```
-###### 2.定义接口
 
-```Java
+#### 定义请求接口
+
+```
 public interface NBAApiT {
 
     @GET("onebox/basketball/nba")
@@ -123,9 +144,11 @@ public interface NBAApiT {
 }
 ```
 
-###### 3.创建实例
-```Java
-单例模式创建Service，推荐使用这种
+#### 创建请求实例
+
+* 单例模式创建Service(推荐使用这种)
+
+```java
 public class NbaService {
 
 
@@ -153,15 +176,16 @@ public class NbaService {
 }
 ```
 
+* 使用new Service创建Service，这中用来做动态切换BaseUrl测试等
+
 ```Java
-使用new Service创建Service，这中用来做动态切换BaseUrl测试等
-public class NBAServiceTT {
+public class NBAService {
 
     private NBAApi mNbaApi;
 
-    public NBAServiceTT() {
+    public NBAServiceTT(String baseUrl) {
         //涉及到动态切换BaseUrl则用new Service()，不使用单例模式
-        mNbaApi = RetrofitFactory.getInstance().create("http://op.juhe.cn/", NBAApi.class);
+        mNbaApi = RetrofitFactory.getInstance().create(baseUrl, NBAApi.class);
     }
 
     public Observable<NBAEntity> getNBAInfo(String key) {
@@ -172,29 +196,28 @@ public class NBAServiceTT {
 }
 ```
 
-###### 4.设置接收参数
-```Java
-实体类必须继承BaseResponseEntity，如果公司返回的参数不叫code，则使用@SerializedName("value")起别名的方式，写个别名，  
-然后必须重写getMsg()、setMsg(String msg)success()和tokenInvalid()方法。
-public class NBAEntity extends BaseResponseEntity {
+#### 设置返回接收参数
+
+实体类必须继承BaseResponseEntity
+
+* 返回的Json中，如果错误码和错误日志在最外层，则直接继承BaseResponseEntity
+
+```
+{"code":200,"msg":"success","response":"2018"}
+```
+
+* 返回的Json中，如果错误码和错误码日志在最外层，并且错误码不叫code或者错误日志码不叫msg,则直接继承BaseResponseEntity,并且通过@SerializedName("value")起别名的方式重新赋值错误码或者错误日志码,然后重写success和tokenInvalid的方法
+
+```
+{"status":200,"msg":"success","response":"2018"}
+```
+
+```
+public class XXEntity extends BaseResponseEntity {
 
 
-    @SerializedName("error_code")
+    @SerializedName("status")
     private int code;
-
-    @SerializedName("reason")
-    private String msg;
-
-    @Nullable
-    @Override
-    public String getMsg() {
-        return msg;
-    }
-
-    @Override
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
 
     @Override
     public boolean success() {
@@ -206,81 +229,130 @@ public class NBAEntity extends BaseResponseEntity {
         return ApiConfig.getInvalidateToken() == code;
     }
     
-    public ResultBean result;
-
-    public static class ResultBean {
-
-
-        public String title;
-        public StatuslistBean statuslist;
-        public List<ListBean> list;
-        public List<TeammatchBean> teammatch;
-
-        、、、
+    public String response;
 }
 
-//如果是kotlin也则使用@SerializedName("value")然后选择重写code和msg
-data class NBAKTEntity(
+// 或者使用泛型包装
+public class XXEntity<T> extends BaseResponseEntity {
+
+
+    @SerializedName("status")
+    private int code;
+
+    @Override
+    public boolean success() {
+        return ApiConfig.getSucceedCode() == code;
+    }
+
+    @Override
+    public boolean tokenInvalid() {
+        return ApiConfig.getInvalidateToken() == code;
+    }
+    
+    public T response;
+}
+
+// kotlin也可以使用@SerializedName("value")然后选择重写code或者msg
+data class XXEntity(
     @SerializedName("error_code") override var code: Int, @SerializedName("reason") override var msg: String, var result: ResultEntity?
 ) : BaseResponseEntity<NBAKTEntity>()
 
 ```
-###### 5.发送请求,接收参数
 
-```Java
+* 返回的Json中，如果错误码和错误日志不在最外层，继承BaseResponseEntity,重写success和tokenInvalid方法
 
-findViewById(R.id.btnNBA).setOnClickListener(v -> {
-            NbaService.getInstance()
-                    .getNBAInfo("6949e822e6844ae6453fca0cf83379d3")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .compose(this.bindToLifecycle())
-                    .subscribe(new BaseObserver<NBAEntity>(){
+```
+{"responseHeader":{"status":200,"msg":"success"},"response":"success"}
+```
 
-                        @Override
-                        public void onSuccess(NBAEntity response) {
-                            Toast.makeText(TestNBAActivity.this, response.result.title, Toast.LENGTH_SHORT).show();
-                        }
+```
+public class XXEntity<T> extends BaseResponseEntity {
 
-                    });
+    public T response;
 
+    private ResponseHeader responseHeader;
+
+    public class ResponseHeader {
+        public int status;
+        public String msg;
+    }
+
+    @Override
+    public int getCode() {
+        return responseHeader.status;
+    }
+
+    @NotNull
+    @Override
+    public String getMsg() {
+        return responseHeader.msg;
+    }
+
+    @Override
+    public boolean success() {
+        return ApiConfig.getSucceedCode() == responseHeader.status;
+    }
+
+    @Override
+    public boolean tokenInvalid() {
+        return ApiConfig.getInvalidateToken() == responseHeader.status;
+    }
+
+}
+```
+#### 发送请求,接收参数
+
+```
+NbaService.getInstance()
+        .getNBAInfo("6949e822e6844ae6453fca0cf83379d3")
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .compose(this.bindToLifecycle())
+        .subscribe(new BaseObserver<NBAEntity>(){
+
+            @Override
+            public void onSuccess(NBAEntity response) {
+                Toast.makeText(TestNBAActivity.this, response.result.title, Toast.LENGTH_SHORT).show();
+            }
 
         });
 
+
 ```
 
-如果想使用系统提供的Dialog,但是重写了onError方法但是没有使用super.onError(e);  
-那么必须调用onRequestEnd()方法，不然Dialog是不会消失的，至于原因自己参照Java多态机制；
+* 如果想使用系统提供的Dialog,但是重写了onError方法但是没有使用super.onError(e),那么必须调用onRequestEnd()方法，不然Dialog是不会消失的，至于原因自己参照Java多态机制；
+
 ```
-UploadManager.getInstance()
-                    .uploadMultiPicList(list)
-                    .subscribe(parts -> {
-                        UploadService.getInstance()
-                                .uploadPic(parts)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .compose(this.bindToLifecycle())
-                                .subscribe(new BaseObserver<BaseResponseEntity>(this, true) {
-                                    @Override
-                                    public void onSuccess(BaseResponseEntity response) {
-                                        Toast.makeText(MainActivity.this, response.getMsg(), Toast.LENGTH_SHORT).show();
-                                    }
+UploadManager
+            .getInstance()
+            .uploadMultiPicList(list)
+            .subscribe(parts -> {
+                UploadService.getInstance()
+                        .uploadPic(parts)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .compose(this.bindToLifecycle())
+                        .subscribe(new BaseObserver<BaseResponseEntity>(this, true) {
+                            @Override
+                            public void onSuccess(BaseResponseEntity response) {
+                                Toast.makeText(MainActivity.this, response.getMsg(), Toast.LENGTH_SHORT).show();
+                            }
 
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        //super.onError(e);
-                                        onRequestEnd();
-                                        Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            @Override
+                            public void onError(Throwable e) {
+                                //super.onError(e);
+                                onRequestEnd();
+                                Toast.makeText(MainActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
 
-                    });
+            });
 ```
 
-#### 3、效果展示
+### 效果展示
 
 ![show.gif](img/show.gif)
 
-###### 6.参考资料请移交 https://blog.csdn.net/CherryBean/article/details/86223249
+### 参考资料请移交 https://www.jianshu.com/p/181227ca8a4d
 

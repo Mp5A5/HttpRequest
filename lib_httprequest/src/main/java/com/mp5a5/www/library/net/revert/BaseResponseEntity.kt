@@ -18,12 +18,25 @@ open class BaseResponseEntity : Serializable {
         private const val serialVersionUID = 1L
     }
 
+    /**
+     * 请求成功返回
+     */
     open fun success(): Boolean {
         return ApiConfig.getSucceedCode() == code
     }
 
+    /**
+     * 请求返回token失效的code
+     */
     open fun tokenInvalid(): Boolean {
-        return ApiConfig.getInvalidateToken() == code
+        return ApiConfig.getInvalidToken() == code
+    }
+
+    /**
+     * 请求返回退出APP的code
+     */
+    open fun quitApp(): Boolean {
+        return ApiConfig.getQuitCode() == code
     }
 
 }

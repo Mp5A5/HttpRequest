@@ -50,7 +50,7 @@ public class TestActivity extends RxAppCompatActivity {
     private void initReceiver() {
         mQuitAppReceiver = new QuitAppReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(ApiConfig.getQuitBroadcastReceiverFilter());
+        filter.addAction(ApiConfig.getTokenInvalidBroadcastFilter());
         registerReceiver(mQuitAppReceiver, filter);
     }
 
@@ -59,7 +59,7 @@ public class TestActivity extends RxAppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (ApiConfig.getQuitBroadcastReceiverFilter().equals(intent.getAction())) {
+            if (ApiConfig.getTokenInvalidBroadcastFilter().equals(intent.getAction())) {
 
                 String msg = intent.getStringExtra(BaseObserver.TOKEN_INVALID_TAG);
                 if (!TextUtils.isEmpty(msg)) {

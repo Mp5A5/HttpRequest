@@ -38,6 +38,12 @@ public abstract class BaseDisposableObserver<T extends BaseResponseEntity> exten
      * token失效 发送广播标识
      */
     public static final String TOKEN_INVALID_TAG = "token_invalid";
+    public static final String REFRESH_TOKEN = "refresh_token";
+
+    /**
+     * 退出app 发送广播标识
+     */
+    public static final String QUIT_APP_TAG = "quit_app_tag";
     public static final String QUIT_APP = "quit_app";
 
     private static final String CONNECT_ERROR = "网络连接失败,请检查网络";
@@ -88,15 +94,25 @@ public abstract class BaseDisposableObserver<T extends BaseResponseEntity> exten
             }
         } else if (response.tokenInvalid()) {
             //token失效捕捉，发送广播，在项目中接收该动态广播然后做退出登录等一些列操作
-            VariableUtils.receive_token_count++;
-            if (1 == VariableUtils.receive_token_count) {
-                sendBroadcast();
-            } else if (VariableUtils.receive_token_count > 1) {
-                if (System.currentTimeMillis() - VariableUtils.temp_system_time > 1000) {
-                    sendBroadcast();
+            VariableUtils.receiveTokenCount.incrementAndGet();
+            if (1 == VariableUtils.receiveTokenCount.get()) {
+                sendTokenInvalidBroadcast();
+            } else if (VariableUtils.receiveTokenCount.get() > 1) {
+                if (System.currentTimeMillis() - VariableUtils.tokenInvalidIncTime.get() > 1000) {
+                    sendTokenInvalidBroadcast();
                 }
             }
-            VariableUtils.temp_system_time = System.currentTimeMillis();
+            VariableUtils.tokenInvalidIncTime.getAndAdd(System.currentTimeMillis());
+        } else if (response.quitApp()) {
+            VariableUtils.receiveQuitAppCount.incrementAndGet();
+            if (1 == VariableUtils.receiveQuitAppCount.get()) {
+                sendQuiteAppBroadcast();
+            } else if (VariableUtils.receiveQuitAppCount.get() > 1) {
+                if (System.currentTimeMillis() - VariableUtils.quitAppIncTime.get() > 1000) {
+                    sendQuiteAppBroadcast();
+                }
+            }
+            VariableUtils.quitAppIncTime.getAndAdd(System.currentTimeMillis());
         } else {
             try {
                 onFailing(response);
@@ -106,10 +122,17 @@ public abstract class BaseDisposableObserver<T extends BaseResponseEntity> exten
         }
     }
 
-    private void sendBroadcast() {
+    private void sendTokenInvalidBroadcast() {
         Intent intent = new Intent();
-        intent.setAction(ApiConfig.getQuitBroadcastReceiverFilter());
-        intent.putExtra(TOKEN_INVALID_TAG, QUIT_APP);
+        intent.setAction(ApiConfig.getQuitBroadcastFilter());
+        intent.putExtra(TOKEN_INVALID_TAG, REFRESH_TOKEN);
+        AppContextUtils.getContext().sendBroadcast(intent);
+    }
+
+    private void sendQuiteAppBroadcast() {
+        Intent intent = new Intent();
+        intent.setAction(ApiConfig.getQuitBroadcastFilter());
+        intent.putExtra(QUIT_APP_TAG, QUIT_APP);
         AppContextUtils.getContext().sendBroadcast(intent);
     }
 

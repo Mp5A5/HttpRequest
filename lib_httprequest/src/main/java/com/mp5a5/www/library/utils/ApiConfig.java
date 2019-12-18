@@ -13,22 +13,26 @@ import java.io.Serializable;
  */
 public class ApiConfig implements Serializable {
 
-    private static int mInvalidateToken;
+    private static int mInvalidToken;
+    private static int mQuitCode;
     private static String mBaseUrl;
     private static int mDefaultTimeout = 2000;
     private static int mSucceedCode;
-    private static String mQuitBroadcastReceiverFilter;
+    private static String mTokenInvalidBroadcastFilter;
+    private static String mQuitBroadcastFilter;
     private static ArrayMap<String, String> mHeads;
     private static String mToken = "";
     private static boolean mOpenHttps;
     private static SslSocketConfigure mSslSocketConfigure;
 
     private ApiConfig(Builder builder) {
-        mInvalidateToken = builder.invalidateToken;
+        mInvalidToken = builder.invalidateToken;
+        mQuitCode = builder.quitCode;
         mBaseUrl = builder.baseUrl;
         mDefaultTimeout = builder.defaultTimeout;
         mSucceedCode = builder.succeedCode;
-        mQuitBroadcastReceiverFilter = builder.broadcastFilter;
+        mTokenInvalidBroadcastFilter = builder.tokenInvalidBroadcastFilter;
+        mQuitBroadcastFilter = builder.quitBroadcastFilter;
         mHeads = builder.heads;
         mOpenHttps = builder.openHttps;
         mSslSocketConfigure = builder.sslSocketConfigure;
@@ -38,8 +42,8 @@ public class ApiConfig implements Serializable {
         AppContextUtils.init(appContext);
     }
 
-    public static int getInvalidateToken() {
-        return mInvalidateToken;
+    public static int getInvalidToken() {
+        return mInvalidToken;
     }
 
     public static String getBaseUrl() {
@@ -54,8 +58,11 @@ public class ApiConfig implements Serializable {
         return mSucceedCode;
     }
 
-    public static String getQuitBroadcastReceiverFilter() {
-        return mQuitBroadcastReceiverFilter;
+    public static String getTokenInvalidBroadcastFilter() {
+        return mTokenInvalidBroadcastFilter;
+    }
+    public static String getQuitBroadcastFilter() {
+        return mQuitBroadcastFilter;
     }
 
     public static ArrayMap<String, String> getHeads() {
@@ -65,7 +72,6 @@ public class ApiConfig implements Serializable {
     public static void setHeads(ArrayMap<String, String> mHeads) {
         ApiConfig.mHeads = mHeads;
     }
-
 
     public static String getToken() {
         return mToken;
@@ -79,6 +85,9 @@ public class ApiConfig implements Serializable {
         return mOpenHttps;
     }
 
+    public static int getQuitCode() {
+        return mQuitCode;
+    }
 
     public static SslSocketConfigure getSslSocketConfigure() {
         return mSslSocketConfigure;
@@ -88,13 +97,17 @@ public class ApiConfig implements Serializable {
 
         private int invalidateToken;
 
+        private int quitCode;
+
         private String baseUrl;
 
         private int defaultTimeout;
 
         private int succeedCode;
 
-        private String broadcastFilter;
+        private String quitBroadcastFilter;
+
+        private String tokenInvalidBroadcastFilter;
 
         private ArrayMap<String, String> heads;
 
@@ -107,8 +120,13 @@ public class ApiConfig implements Serializable {
             return this;
         }
 
-        public Builder setFilter(@NonNull String filter) {
-            this.broadcastFilter = filter;
+        public Builder setTokenInvalidFilter(@NonNull String filter) {
+            this.tokenInvalidBroadcastFilter = filter;
+            return this;
+        }
+
+        public Builder setQuitFilter(@NonNull String filter) {
+            this.quitBroadcastFilter = filter;
             return this;
         }
 
@@ -123,8 +141,13 @@ public class ApiConfig implements Serializable {
             return this;
         }
 
-        public Builder setInvalidateToken(int invalidateToken) {
+        public Builder setInvalidToken(int invalidateToken) {
             this.invalidateToken = invalidateToken;
+            return this;
+        }
+
+        public Builder setQuitCode(int quitCode) {
+            this.quitCode = quitCode;
             return this;
         }
 

@@ -39,7 +39,12 @@ public class NBAJEntity extends BaseResponseEntity {
 
     @Override
     public boolean tokenInvalid() {
-        return ApiConfig.getInvalidateToken() == code;
+        return ApiConfig.getInvalidToken() == code;
+    }
+
+    @Override
+    public boolean quitApp() {
+        return ApiConfig.getQuitCode() == code;
     }
 
     public ResultBean result;

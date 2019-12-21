@@ -135,7 +135,7 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
 
     private void sendTokenInvalidBroadcast() {
         Intent intent = new Intent();
-        intent.setAction(ApiConfig.getQuitBroadcastFilter());
+        intent.setAction(ApiConfig.getTokenInvalidBroadcastFilter());
         intent.putExtra(TOKEN_INVALID_TAG, REFRESH_TOKEN);
         AppContextUtils.getContext().sendBroadcast(intent);
     }

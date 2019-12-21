@@ -124,7 +124,7 @@ public abstract class BaseDisposableObserver<T extends BaseResponseEntity> exten
 
     private void sendTokenInvalidBroadcast() {
         Intent intent = new Intent();
-        intent.setAction(ApiConfig.getQuitBroadcastFilter());
+        intent.setAction(ApiConfig.getTokenInvalidBroadcastFilter());
         intent.putExtra(TOKEN_INVALID_TAG, REFRESH_TOKEN);
         AppContextUtils.getContext().sendBroadcast(intent);
     }

@@ -34,7 +34,7 @@ class TestKTApp : Application() {
 
         val build = ApiConfig.Builder()
             .setBaseUrl(baseUrl)//BaseUrl，这个地方加入后项目中默认使用该url
-            .setInvalidateToken(10)//Token失效码
+            .setInvalidToken(10)//Token失效码
             .setSucceedCode(0)//成功返回码  NBA的测试返回成功code为0  上传图片返回code为200 由于是不同接口 请大家注意
             /*
              *    Token失效后发送动态广播，配合BaseObserver中的标识进行接收使用
@@ -65,7 +65,7 @@ class TestKTApp : Application() {
              *   registerReceiver(quitAppReceiver, filter)
              *   }
              */
-            .setFilter("com.mp5a5.quit.broadcastFilter")////失效广播Filter设置
+            .setTokenInvalidFilter("com.mp5a5.quit.broadcastFilter")////失效广播Filter设置
             //.setDefaultTimeout(2000)//响应时间，可以不设置，默认为2000毫秒
             //.setHeads(headMap)//动态添加的header，也可以在其他地方通过ApiConfig.setHeads()设置
             //.setOpenHttps(true)//开启HTTPS验证

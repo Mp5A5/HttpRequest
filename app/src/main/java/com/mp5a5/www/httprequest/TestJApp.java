@@ -36,8 +36,8 @@ public class TestJApp extends Application {
 
         ApiConfig build = new ApiConfig.Builder()
                 .setBaseUrl(baseUrl)//BaseUrl，这个地方加入后项目中默认使用该url
-                .setInvalidToken(10)//Token失效码
-                .setSucceedCode(0)//成功返回码  NBA的测试返回成功code为0  上传图片返回code为200 由于是不同接口 请大家注意
+                .setInvalidToken(0)//Token失效码
+                .setSucceedCode(200)//成功返回码  NBA的测试返回成功code为0  上传图片返回code为200 由于是不同接口 请大家注意
                 .setTokenInvalidFilter("com.mp5a5.quit.tokenInvalidBroadcastFilter")//失效广播Filter设置
                 .setQuitCode(200)//退出app码
                 .setTokenInvalidFilter("com.mp5a5.quit.quitAppBroadcastFilter")//失效广播Filter设置

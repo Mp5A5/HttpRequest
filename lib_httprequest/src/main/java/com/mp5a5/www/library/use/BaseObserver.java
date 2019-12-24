@@ -3,6 +3,7 @@ package com.mp5a5.www.library.use;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.JsonParseException;
@@ -37,6 +38,11 @@ public abstract class BaseObserver<T extends BaseResponseEntity> implements Obse
     private CustomProgressDialogUtils progressDialogUtils;
     private Context mContext;
     private boolean mShowLoading = false;
+
+    /**
+     * 上次请求距离下次请求大于1000毫秒才会发送
+     */
+    private static final int SEND_TIME = 1000;
 
     /**
      * token失效 发送广播标识
@@ -102,21 +108,22 @@ public abstract class BaseObserver<T extends BaseResponseEntity> implements Obse
             if (1 == VariableUtils.receiveTokenCount.get()) {
                 sendTokenInvalidBroadcast();
             } else if (VariableUtils.receiveTokenCount.get() > 1) {
-                if (System.currentTimeMillis() - VariableUtils.tokenInvalidIncTime.get() > 1000) {
+                if (System.currentTimeMillis() - VariableUtils.tokenInvalidIncTime.get() > SEND_TIME) {
                     sendTokenInvalidBroadcast();
                 }
+                VariableUtils.tokenInvalidIncTime.set(System.currentTimeMillis());
             }
-            VariableUtils.tokenInvalidIncTime.getAndAdd(System.currentTimeMillis());
         } else if (response.quitApp()) {
             VariableUtils.receiveQuitAppCount.incrementAndGet();
             if (1 == VariableUtils.receiveQuitAppCount.get()) {
                 sendQuiteAppBroadcast();
             } else if (VariableUtils.receiveQuitAppCount.get() > 1) {
-                if (System.currentTimeMillis() - VariableUtils.quitAppIncTime.get() > 1000) {
+
+                if (System.currentTimeMillis() - VariableUtils.quitAppIncTime.get() > SEND_TIME) {
                     sendQuiteAppBroadcast();
                 }
             }
-            VariableUtils.quitAppIncTime.getAndAdd(System.currentTimeMillis());
+            VariableUtils.quitAppIncTime.set(System.currentTimeMillis());
         } else {
             try {
                 onFailing(response);

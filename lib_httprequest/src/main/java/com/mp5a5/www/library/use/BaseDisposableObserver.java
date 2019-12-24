@@ -102,7 +102,7 @@ public abstract class BaseDisposableObserver<T extends BaseResponseEntity> exten
                     sendTokenInvalidBroadcast();
                 }
             }
-            VariableUtils.tokenInvalidIncTime.getAndAdd(System.currentTimeMillis());
+            VariableUtils.tokenInvalidIncTime.set(System.currentTimeMillis());
         } else if (response.quitApp()) {
             VariableUtils.receiveQuitAppCount.incrementAndGet();
             if (1 == VariableUtils.receiveQuitAppCount.get()) {
@@ -112,7 +112,7 @@ public abstract class BaseDisposableObserver<T extends BaseResponseEntity> exten
                     sendQuiteAppBroadcast();
                 }
             }
-            VariableUtils.quitAppIncTime.getAndAdd(System.currentTimeMillis());
+            VariableUtils.quitAppIncTime.set(System.currentTimeMillis());
         } else {
             try {
                 onFailing(response);

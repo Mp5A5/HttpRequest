@@ -113,7 +113,7 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
                     sendTokenInvalidBroadcast();
                 }
             }
-            VariableUtils.tokenInvalidIncTime.getAndAdd(System.currentTimeMillis());
+            VariableUtils.tokenInvalidIncTime.set(System.currentTimeMillis());
         } else if (response.quitApp()) {
             VariableUtils.receiveQuitAppCount.incrementAndGet();
             if (1 == VariableUtils.receiveQuitAppCount.get()) {
@@ -123,7 +123,7 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
                     sendQuiteAppBroadcast();
                 }
             }
-            VariableUtils.quitAppIncTime.getAndAdd(System.currentTimeMillis());
+            VariableUtils.quitAppIncTime.set(System.currentTimeMillis());
         } else {
             try {
                 onFailing(response);

@@ -47,7 +47,7 @@ public class HttpHeaderInterceptor implements Interceptor {
                 });
             } else {
                 Iterator<Map.Entry<String, String>> iterator = heads.entrySet().iterator();
-                if (iterator.hasNext()) {
+                while (iterator.hasNext()) {
                     Map.Entry<String, String> entry = iterator.next();
                     authorization.addHeader(entry.getKey(), entry.getValue());
                 }

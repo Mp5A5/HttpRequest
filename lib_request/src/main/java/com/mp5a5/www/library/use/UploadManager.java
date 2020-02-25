@@ -4,24 +4,35 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
-import androidx.annotation.NonNull;
+
 import com.mp5a5.www.library.utils.AppContextUtils;
+
+import org.reactivestreams.Publisher;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.Callable;
+
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import org.reactivestreams.Publisher;
-
-import java.io.*;
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.concurrent.Callable;
 
 /**
  * @author ：mp5a5 on 2019/1/2 14：31

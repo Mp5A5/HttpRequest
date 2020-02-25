@@ -2,7 +2,7 @@ package com.mp5a5.www.library.use;
 
 
 import android.text.TextUtils;
-import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mp5a5.www.library.net.https.SslSocketFactory;
@@ -14,14 +14,16 @@ import com.mp5a5.www.library.net.interceptor.HttpLoggerInterceptor;
 import com.mp5a5.www.library.net.transform.NullTypeAdapterFactory;
 import com.mp5a5.www.library.utils.ApiConfig;
 import com.mp5a5.www.library.utils.AppContextUtils;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.annotations.Nullable;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 /**
  * describe：Retrofit+RxJava网络请求封装

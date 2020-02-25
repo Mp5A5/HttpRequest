@@ -2,9 +2,8 @@ package com.mp5a5.www.library.utils;
 
 import android.content.Context;
 import android.util.ArrayMap;
-import androidx.annotation.NonNull;
-
 import java.io.Serializable;
+import io.reactivex.annotations.NonNull;
 
 /**
  * @author ：mp5a5 on 2018/12/27 20：51

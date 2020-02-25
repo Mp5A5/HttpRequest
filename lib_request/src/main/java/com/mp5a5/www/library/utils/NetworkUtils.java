@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
-import androidx.annotation.RequiresPermission;
 
 import java.lang.reflect.Method;
 
@@ -42,7 +41,6 @@ public class NetworkUtils {
      *
      * @return NetworkInfo
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     private static NetworkInfo getActiveNetworkInfo(Context appContext) {
         ConnectivityManager cm = (ConnectivityManager) appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo();
@@ -54,7 +52,6 @@ public class NetworkUtils {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public static boolean isConnected(Context appContext) {
         NetworkInfo info = getActiveNetworkInfo(appContext);
         return info != null && info.isConnected();
@@ -98,7 +95,6 @@ public class NetworkUtils {
      *
      * @return {@code true}: 是<br>{@code false}: 否
      */
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     public static boolean is4G(Context appContext) {
         NetworkInfo info = getActiveNetworkInfo(appContext);
         return info != null && info.isAvailable() && info.getSubtype() == TelephonyManager.NETWORK_TYPE_LTE;
@@ -141,7 +137,6 @@ public class NetworkUtils {
      *
      * @return {@code true}: 连接<br>{@code false}: 未连接
      */
-    @RequiresPermission("android.permission.ACCESS_NETWORK_STATE")
     public static boolean isWifiConnected(Context appContext) {
         ConnectivityManager cm = (ConnectivityManager) appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm != null && cm.getActiveNetworkInfo() != null
@@ -171,7 +166,6 @@ public class NetworkUtils {
      * <li>{@link NetworkType#NETWORK_3G     } </li> <li>{@link NetworkType#NETWORK_2G     } </li> <li>{@link
      * NetworkType#NETWORK_UNKNOWN} </li> <li>{@link NetworkType#NETWORK_NO     } </li> </ul>
      */
-    @RequiresPermission("android.permission.ACCESS_NETWORK_STATE")
     public static NetworkType getNetworkType(Context appContext) {
         NetworkType netType = NetworkType.NETWORK_NO;
         NetworkInfo info = getActiveNetworkInfo(appContext);

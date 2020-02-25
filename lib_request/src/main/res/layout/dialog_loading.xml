@@ -3,33 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <View
-        android:layout_centerInParent="true"
-        android:background="@drawable/shape_loading_bg"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        />
+        android:layout_centerInParent="true"
+        android:background="@drawable/shape_loading_bg" />
 
     <ImageView
-        android:layout_centerInParent="true"
         android:id="@+id/iv_loading_img"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:background="@drawable/progress_round"
-        />
+        android:layout_centerInParent="true"
+        android:background="@drawable/progress_round" />
 
     <TextView
-        android:layout_below="@+id/iv_loading_img"
         android:id="@+id/tv_loading_msg"
         android:layout_width="wrap_content"
-        android:textColor="#FF999999"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_loading_img"
         android:layout_centerHorizontal="true"
-        android:textSize="10dp"
-        tools:text="Loading..."
         android:layout_marginTop="30dp"
-        />
+        android:textColor="#FF999999"
+        android:textSize="10dp"
+        tools:text="Loading..." />
 </RelativeLayout>

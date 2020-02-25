@@ -46,12 +46,5 @@ dependencies {
     //OkHttp
     api 'com.squareup.okhttp3:okhttp:3.12.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.12.0'
-    //RxLifecycle2
-    api 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
-    api 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
-    api 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
-    api 'com.trello.rxlifecycle3:rxlifecycle-components-preference:3.0.0'
-    api 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.0.0'
-    api 'com.trello.rxlifecycle3:rxlifecycle-kotlin:3.0.0'
-    api 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:3.0.0'
+
 }

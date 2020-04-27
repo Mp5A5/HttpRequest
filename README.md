@@ -324,7 +324,7 @@ NbaService.getInstance()
 
 * 如果想使用系统提供的Dialog,但是重写了onError方法但是没有使用super.onError(e),那么必须调用onRequestEnd()方法，不然Dialog是不会消失的，至于原因自己参照Java多态机制；
 
-```
+```java
 UploadManager
             .getInstance()
             .uploadMultiPicList(list)
@@ -349,6 +349,38 @@ UploadManager
                         });
 
 
+            });
+```
+
+* 如果想使用自己自定义的dialog，则需要在需要重写onRequestStart()和onRequestEnd()两个方法，onRequestStart()用来开启加载动画，onRequestEnd()用来关闭加载动画；
+
+```java
+UploadService.getInstance()
+            .uploadPic(parts)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .compose(this.bindToLifecycle())
+            .subscribe(new BaseObserver<BaseResponseEntity>() {
+                
+                @Override
+                protected void onRequestStart() {
+                  //super.onRequestStart();
+                  // loadStart....
+                  showLoading();
+                }
+                
+                @Override
+                protected void onRequestEnd() {
+                   //super.onRequestEnd();
+                   // loadEnd....
+                   cancelLoading();
+                }
+                
+                @Override
+                public void onSuccess(BaseResponseEntity response) {
+                    ...
+                }
+                
             });
 ```
 

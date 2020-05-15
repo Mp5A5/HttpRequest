@@ -26,6 +26,33 @@ dependencies {
 }
 ```
 
+1、如果使用项目只使用rxjava+retrofit+okhttp
+```
+dependencies {
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:latest-version'
+    implementation 'com.squareup.okhttp3:logging-interceptor:latest-version'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:latest-version'
+    implementation 'com.squareup.retrofit2:converter-gson:latest-version'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:latest-version'
+}
+```
+2、如果项目使用rxjava+rxandroid+retrofit+okhttp
+```
+dependencies {
+    //RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:latest-version'
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:latest-version'
+    implementation 'com.squareup.okhttp3:logging-interceptor:latest-version'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:latest-version'
+    implementation 'com.squareup.retrofit2:converter-gson:latest-version'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:latest-version'
+}
+```
+或者
 ```
 dependencies {
     //RxJava
@@ -41,7 +68,8 @@ dependencies {
 }
 ```
 
-如果项目使用RxLifecycle管理网络请求，则： 
+
+如果项目使用RxLifecycle管理网络请求，则不需要引入rxjava和rxandroid包因为它包括这两个包：
  
 * 如果项目是用的support包则使用RxLifecycle2及对应的版本
 
@@ -60,6 +88,30 @@ dependencies {
 ```
 
 * 如果项目不使用RxLifecycle管理网络请求，而是通过手动管理，则不需要添加RxLifecycle对应的包
+
+推荐使用
+```
+    implementation 'com.squareup.okhttp3:okhttp:latest-version'
+    implementation 'com.squareup.okhttp3:logging-interceptor:latest-version'
+    //Retrofit
+   implementation 'com.squareup.retrofit2:retrofit:latest-version'
+    implementation 'com.squareup.retrofit2:converter-gson:latest-version'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:latest-version'
+    //RxLifecycle3
+    implementation 'com.trello.rxlifecycle3:rxlifecycle:latest-version'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android:latest-version'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:latest-version'
+```
+或者
+```
+implementation 'com.squareup.okhttp3:okhttp:latest-version'
+    implementation 'io.reactivex.rxjava2:rxandroid:latest-version'
+    implementation 'com.squareup.okhttp3:logging-interceptor:latest-version'
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:latest-version'
+    implementation 'com.squareup.retrofit2:converter-gson:latest-version'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:latest-version'
+```
 
 ### 简单使用步骤
 

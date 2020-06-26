@@ -5,6 +5,12 @@ import android.util.ArrayMap;
 import com.mp5a5.www.library.utils.ApiConfig;
 import com.mp5a5.www.library.utils.SslSocketConfigure;
 
+import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Interceptor;
+
 /**
  * @author ：mp5a5 on 2019/1/7 13：50
  * @describe
@@ -21,6 +27,9 @@ public class TestJApp extends Application {
         headMap.put("key1", "value1");
         headMap.put("key2", "value2");
         headMap.put("key3", "value3");
+
+        List<Interceptor> interceptors = new ArrayList<>();
+        interceptors.add(new LoggerInterceptor());
 
         SslSocketConfigure sslSocketConfigure = new SslSocketConfigure.Builder()
                 .setVerifyType(2)//单向双向验证 1单向  2 双向
@@ -45,6 +54,7 @@ public class TestJApp extends Application {
                 .setHeads(headMap)//动态添加的header，也可以在其他地方通过ApiConfig.setHeads()设置
                 //.setOpenHttps(true)//开启HTTPS验证
                 //.setSslSocketConfigure(sslSocketConfigure)//HTTPS认证配置
+                .setInterceptor(interceptors)
                 .build();
         /*
          *     Token失效后发送动态广播的Filter，配合BaseObserver中的标识进行接收使用
@@ -78,5 +88,7 @@ public class TestJApp extends Application {
          */
 
         build.init(this);
+
+
     }
 }

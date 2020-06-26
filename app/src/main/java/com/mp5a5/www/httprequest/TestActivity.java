@@ -61,7 +61,7 @@ public class TestActivity extends RxAppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if (ApiConfig.getTokenInvalidBroadcastFilter().equals(intent.getAction())) {
 
-                String msg = intent.getStringExtra(BaseObserver.TOKEN_INVALID_TAG);
+                String msg = intent.getStringExtra(ApiConfig.TokenType.TOKEN_INVALID_TAG.getName());
                 if (!TextUtils.isEmpty(msg)) {
                     Toast.makeText(TestActivity.this, msg, Toast.LENGTH_SHORT).show();
                 }

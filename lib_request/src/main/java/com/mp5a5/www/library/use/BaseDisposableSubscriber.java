@@ -45,18 +45,6 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
     private Context mContext;
     private boolean mShowLoading = false;
 
-    /**
-     * token失效 发送广播标识
-     */
-    public static final String TOKEN_INVALID_TAG = "token_invalid";
-    public static final String REFRESH_TOKEN = "refresh_token";
-
-    /**
-     * 退出app 发送广播标识
-     */
-    public static final String QUIT_APP_TAG = "quit_app_tag";
-    public static final String QUIT_APP = "quit_app";
-
     private static final String CONNECT_ERROR = "网络连接失败,请检查网络";
     private static final String CONNECT_TIMEOUT = "连接超时,请稍后再试";
     private static final String BAD_NETWORK = "服务器异常";
@@ -136,14 +124,14 @@ public abstract class BaseDisposableSubscriber<T extends BaseResponseEntity> ext
     private void sendTokenInvalidBroadcast() {
         Intent intent = new Intent();
         intent.setAction(ApiConfig.getTokenInvalidBroadcastFilter());
-        intent.putExtra(TOKEN_INVALID_TAG, REFRESH_TOKEN);
+        intent.putExtra(ApiConfig.TokenType.TOKEN_INVALID_TAG.getName(), ApiConfig.TokenType.TOKEN_REFRESH.getName());
         AppContextUtils.getContext().sendBroadcast(intent);
     }
 
     private void sendQuiteAppBroadcast() {
         Intent intent = new Intent();
         intent.setAction(ApiConfig.getQuitBroadcastFilter());
-        intent.putExtra(QUIT_APP_TAG, QUIT_APP);
+        intent.putExtra(ApiConfig.QuitType.QUIT_APP_TAG.getName(), ApiConfig.QuitType.QUIT_APP.getName());
         AppContextUtils.getContext().sendBroadcast(intent);
     }
 

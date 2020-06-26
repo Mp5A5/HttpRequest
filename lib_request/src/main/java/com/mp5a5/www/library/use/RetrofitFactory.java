@@ -52,6 +52,12 @@ public class RetrofitFactory {
                 .addNetworkInterceptor(new HttpCacheInterceptor())
                 .cache(cache);
 
+        if (ApiConfig.getInterceptors() != null && ApiConfig.getInterceptors().size() > 0) {
+            for (int i = 0, size = ApiConfig.getInterceptors().size(); i < size; i++) {
+                httpClientBuilder.addInterceptor(ApiConfig.getInterceptors().get(i));
+            }
+        }
+
         if (ApiConfig.getOpenHttps()) {
             httpClientBuilder.sslSocketFactory(1 == ApiConfig.getSslSocketConfigure().getVerifyType() ?
                     SslSocketFactory.getSSLSocketFactory(ApiConfig.getSslSocketConfigure().getCertificateInputStream()) :

@@ -2,8 +2,12 @@ package com.mp5a5.www.library.utils;
 
 import android.content.Context;
 import android.util.ArrayMap;
+
 import java.io.Serializable;
+import java.util.List;
+
 import io.reactivex.annotations.NonNull;
+import okhttp3.Interceptor;
 
 /**
  * @author ：mp5a5 on 2018/12/27 20：51
@@ -23,6 +27,7 @@ public class ApiConfig implements Serializable {
     private static String mToken = "";
     private static boolean mOpenHttps;
     private static SslSocketConfigure mSslSocketConfigure;
+    private static List<Interceptor> mInterceptors;
 
     private ApiConfig(Builder builder) {
         mInvalidToken = builder.invalidateToken;
@@ -35,6 +40,7 @@ public class ApiConfig implements Serializable {
         mHeads = builder.heads;
         mOpenHttps = builder.openHttps;
         mSslSocketConfigure = builder.sslSocketConfigure;
+        mInterceptors=builder.interceptors;
     }
 
     public void init(Context appContext) {
@@ -60,6 +66,7 @@ public class ApiConfig implements Serializable {
     public static String getTokenInvalidBroadcastFilter() {
         return mTokenInvalidBroadcastFilter;
     }
+
     public static String getQuitBroadcastFilter() {
         return mQuitBroadcastFilter;
     }
@@ -92,7 +99,11 @@ public class ApiConfig implements Serializable {
         return mSslSocketConfigure;
     }
 
-    public static final class Builder  {
+    public static List<Interceptor> getInterceptors() {
+        return mInterceptors;
+    }
+
+    public static final class Builder {
 
         private int invalidateToken;
 
@@ -113,6 +124,8 @@ public class ApiConfig implements Serializable {
         private boolean openHttps = false;
 
         private SslSocketConfigure sslSocketConfigure;
+
+        private List<Interceptor> interceptors;
 
         public Builder setHeads(ArrayMap<String, String> heads) {
             this.heads = heads;
@@ -165,8 +178,92 @@ public class ApiConfig implements Serializable {
             return this;
         }
 
+        public Builder setInterceptor(List<Interceptor> interceptors){
+            this.interceptors= interceptors;
+            return this;
+        }
+
         public ApiConfig build() {
             return new ApiConfig(this);
+        }
+    }
+
+    public enum QuitType {
+
+        /**
+         * 退出app标志位
+         */
+        QUIT_APP_TAG(0, "quit_app_tag"),
+
+        /**
+         * 退出app event
+         */
+        QUIT_APP(1, "quit_app");
+
+        public static final String TOKEN_INVALID_TAG = "token_invalid";
+        public static final String REFRESH_TOKEN = "refresh_token";
+
+        private int code;
+        private String name;
+
+        QuitType(int code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    public enum TokenType {
+
+        /**
+         * 退出token失效标志位
+         */
+        TOKEN_INVALID_TAG(0, "token_invalid_tag"),
+
+        /**
+         * 刷新token
+         */
+        TOKEN_REFRESH(1, "refresh_token");
+
+        private int code;
+        private String name;
+
+        TokenType(int code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

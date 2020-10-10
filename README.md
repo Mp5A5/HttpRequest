@@ -1,4 +1,4 @@
-# 基于Retrofit2+RxJava+OkHttp3+RxLifecycle3的网络请求框架
+# 基于Retrofit2+RxJava+OkHttp3的网络请求框架
 
 ### 添加依赖和配置
 
@@ -22,7 +22,7 @@ compileOptions {
 
 ```
 dependencies {
-       implementation 'com.github.Mp5A5:HttpRequest:1.2.2'
+       implementation 'com.github.Mp5A5:HttpRequest:1.2.3'
 }
 ```
 
@@ -31,19 +31,7 @@ dependencies {
  
 * 如果项目是用的support包则使用RxLifecycle2及对应的版本
 
-```
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:latest-version'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:latest-version'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:version'
-```
-
 * 如果项目是用的androidx包则使用RxLifecycle3及对应的版本
-
-```
-    implementation 'com.trello.rxlifecycle3:rxlifecycle:latest-version'
-    implementation 'com.trello.rxlifecycle3:rxlifecycle-android:latest-version'
-    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:latest-version'
-```
 
 * 如果项目不使用RxLifecycle管理网络请求，而是通过手动管理，则不需要添加RxLifecycle对应的包
 
@@ -337,7 +325,7 @@ NbaService.getInstance()
 
 * 如果想使用系统提供的Dialog,但是重写了onError方法但是没有使用super.onError(e),那么必须调用onRequestEnd()方法，不然Dialog是不会消失的，至于原因自己参照Java多态机制；
 
-```java
+```
 UploadManager
             .getInstance()
             .uploadMultiPicList(list)
@@ -367,7 +355,7 @@ UploadManager
 
 * 如果想使用自己自定义的dialog，则需要在需要重写onRequestStart()和onRequestEnd()两个方法，onRequestStart()用来开启加载动画，onRequestEnd()用来关闭加载动画；
 
-```java
+```
 UploadService.getInstance()
             .uploadPic(parts)
             .subscribeOn(Schedulers.io())

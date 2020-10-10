@@ -5,12 +5,12 @@ import com.mp5a5.www.library.utils.ApiConfig;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.internal.annotations.EverythingIsNonNull;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import retrofit2.internal.EverythingIsNonNull;
 
 /**
  * @author ：mp5a5 on 2018/12/23 13：31

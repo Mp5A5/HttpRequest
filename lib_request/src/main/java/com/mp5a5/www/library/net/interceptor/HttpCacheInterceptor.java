@@ -7,9 +7,9 @@ import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.internal.annotations.EverythingIsNonNull;
 
 import java.io.IOException;
+import retrofit2.internal.EverythingIsNonNull;
 
 /**
  * @author ：mp5a5 on 2018/12/26 16：34

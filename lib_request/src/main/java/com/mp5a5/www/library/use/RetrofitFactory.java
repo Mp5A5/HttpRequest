@@ -10,7 +10,6 @@ import com.mp5a5.www.library.net.https.UnSafeHostnameVerify;
 import com.mp5a5.www.library.net.https.UnSafeTrustManager;
 import com.mp5a5.www.library.net.interceptor.HttpCacheInterceptor;
 import com.mp5a5.www.library.net.interceptor.HttpHeaderInterceptor;
-import com.mp5a5.www.library.net.interceptor.HttpLoggerInterceptor;
 import com.mp5a5.www.library.net.transform.NullTypeAdapterFactory;
 import com.mp5a5.www.library.utils.ApiConfig;
 import com.mp5a5.www.library.utils.AppContextUtils;
@@ -47,7 +46,7 @@ public class RetrofitFactory {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient().newBuilder()
                 .readTimeout(ApiConfig.getDefaultTimeout(), TimeUnit.MILLISECONDS)
                 .connectTimeout(ApiConfig.getDefaultTimeout(), TimeUnit.MILLISECONDS)
-                .addInterceptor(HttpLoggerInterceptor.getLoggerInterceptor())
+                //.addInterceptor(HttpLoggerInterceptor.getLoggerInterceptor())
                 .addInterceptor(new HttpHeaderInterceptor())
                 .addNetworkInterceptor(new HttpCacheInterceptor())
                 .cache(cache);

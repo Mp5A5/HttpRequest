@@ -146,6 +146,9 @@ public class MainActivity extends RxAppCompatActivity {
                     .subscribeWith(new BaseDisposableObserver<NBAJEntity>(this, true) {
                         @Override
                         public void onSuccess(NBAJEntity response) {
+                          if (response.isNot()) {
+                            Log.e("-->","打印了");
+                          }
                             Toast.makeText(MainActivity.this, response.result.title, Toast.LENGTH_SHORT).show();
                         }
                     });

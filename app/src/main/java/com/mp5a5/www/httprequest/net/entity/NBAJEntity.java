@@ -49,6 +49,10 @@ public class NBAJEntity extends BaseResponseEntity {
 
     public ResultBean result;
 
+    public boolean isNot(){
+        return result!=null;
+    }
+
 
     public static class ResultBean {
 
